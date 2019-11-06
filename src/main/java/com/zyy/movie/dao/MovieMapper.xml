@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zyy.movie.dao.MovieMapper">
+	
+	<select id="selects" resultType="movie">
+		select * from movie
+		<where>
+			<!-- 电影名称 -->
+			<if test="name!=null and name!=''">
+				name like "%"#{name}"%"
+			</if>
+			<!-- 导演 -->
+			<if test="actor!=null and actor!=''">
+				and actor like "%"#{actor}"%"
+			</if>
+			<!-- 年代 -->
+			<if test="year!=null">
+				and year=#{year}
+			</if>
+			<!--上映 时间 -->
+			<if test="startDate!=null and startDate!=''">
+				and uptime >= #{startDate}
+			</if>
+
+			<if test="endDate!=null and endDate!=''">
+				and uptime &lt;= #{endDate}
+			</if>
+
+			<!--价格区间 -->
+			<if test="startPrice!=null and startPrice!=''">
+				and price >= #{startPrice}
+			</if>
+
+			<if test="endPrice!=null and endPrice!=''">
+				and price &lt;= #{endPrice}
+			</if>
+
+           <!--电影时间长度-->
+			<if test="startLongtime!=null">
+				and longtime >= #{startLongtime}
+			</if>
+
+			<if test="endLongtime!=null">
+				and longtime &lt;= #{endLongtime}
+			</if>
+		</where>
+		
+		<if test="orderField!=null and orderField!=''">
+			order by ${orderField} ${orderMethod}
+		</if>
+		
+	</select>
+	
+</mapper>
